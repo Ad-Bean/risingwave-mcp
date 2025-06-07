@@ -1,0 +1,4 @@
+fastmcp
+risingwave-py
+asyncio
+python-dotenv
