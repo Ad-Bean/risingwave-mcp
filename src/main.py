@@ -114,6 +114,23 @@ def show_create_table(table_name: str) -> str:
 
 
 @mcp.tool
+def show_create_materialized_view(mv_name: str) -> str:
+    """
+    Show the CREATE MATERIALIZED VIEW statement for a specific materialized view.
+
+    Args:
+        mv_name: Name of the materialized view
+
+    Returns:
+        CREATE MATERIALIZED VIEW statement
+    """
+    rw = setup_risingwave_connection()
+    query = f"SHOW CREATE MATERIALIZED VIEW {mv_name}"
+    result = rw.fetch(query, format=OutputFormat.DATAFRAME)
+    return result
+
+
+@mcp.tool
 def table_row_count(table_name: str) -> str:
     """
     Get the row count for a specific table.
