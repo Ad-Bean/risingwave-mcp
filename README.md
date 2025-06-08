@@ -32,10 +32,6 @@ A Model Context Protocol (MCP) server for RisingWave database that provides seam
    # Server starts and waits for MCP protocol messages
    ```
 
-## Installation
-
-## Detailed Installation
-
 ### Prerequisites
 
 - Python 3.8 or higher
