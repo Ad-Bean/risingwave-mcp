@@ -25,20 +25,6 @@ A lightweight Model Context Protocol (MCP) server that lets you query and manage
 
 ## Configuration
 
-Copy the example environment file and fill in your RisingWave connection string:
-
-```bash
-cp .env.example .env
-```
-
-Edit `.env`:
-
-```env
-RISINGWAVE_CONNECTION_STR=postgresql://user:password@host:port/dbname?sslmode=require
-```
-
-## Configuration
-
 ### VS Code Copilot
 
 1. Create an MCP server in the VS Code Chat pane (Agent Mode → Select Tools).
@@ -52,8 +38,7 @@ RISINGWAVE_CONNECTION_STR=postgresql://user:password@host:port/dbname?sslmode=re
          "command": "python",
          "args": ["path_to/risingwave-mcp/src/main.py"],
          "env": {
-           "RISINGWAVE_CONNECTION_STR": "<risingwave-connection>",
-           // or use connection params
+           "RISINGWAVE_CONNECTION_STR": "<risingwave-connection> or use connection params",
            "RISINGWAVE_HOST": "<risingwave-host>",
            "RISINGWAVE_USER": "<risingwave-user>",
            "RISINGWAVE_PORT": "4566",
@@ -79,8 +64,7 @@ Add to your `claude_desktop_config.json` under mcpServers:
       "command": "python",
       "args": ["path_to/risingwave-mcp/src/main.py"],
       "env": {
-        "RISINGWAVE_CONNECTION_STR": "<risingwave-connection>",
-        // or use connection params
+        "RISINGWAVE_CONNECTION_STR": "<risingwave-connection> or use connection params",
         "RISINGWAVE_HOST": "<risingwave-host>",
         "RISINGWAVE_USER": "<risingwave-user>",
         "RISINGWAVE_PORT": "4566",
