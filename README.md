@@ -13,7 +13,7 @@ A lightweight Model Context Protocol (MCP) server that lets you query and manage
 1. Clone the repository and enter the directory:
 
    ```bash
-   git clone https://github.com/your-org/risingwave-mcp.git
+   git clone https://github.com/risingwavelabs/risingwave-mcp.git
    cd risingwave-mcp
    ```
 
@@ -24,6 +24,29 @@ A lightweight Model Context Protocol (MCP) server that lets you query and manage
    ```
 
 ## Configuration
+
+You can run RisingWave locally or connect to your cloud RisingWave instance.
+
+### Run Risingwave
+
+You can install RisingWave standlone on your laptop via:
+
+```python
+# Download and install RisingWave standalone
+curl -L https://risingwave.com/sh | sh
+
+# start RisingWave on macOS
+risingwave
+
+# start RisingWave on linux
+./risingwave
+```
+
+For other installation methods, such as Docker, please refer to the [official RisingWave documentation](https://docs.risingwave.com/get-started/quickstart).
+
+### Risingwave Cloud
+
+You can also provision a free-tier cluster on [RisingWave Cloud](https://cloud.risingwave.com/auth/signin/)
 
 ### VS Code Copilot
 
@@ -50,6 +73,18 @@ A lightweight Model Context Protocol (MCP) server that lets you query and manage
      }
    }
    ```
+
+> **Note:** If connecting to a local RisingWave instance, you can use the following examples for the `env` variables:
+>
+> - Connection String: `"RISINGWAVE_CONNECTION_STR": "postgresql://root:root@localhost:4566/dev"`
+>
+> - or use parameters:
+>   - `"RISINGWAVE_HOST": "localhost"`
+>   - `"RISINGWAVE_USER": "root"`
+>   - `"RISINGWAVE_PASSWORD": "root"`
+>   - `"RISINGWAVE_PORT": "4566"`
+>   - `"RISINGWAVE_DATABASE": "dev"`
+>   - `"RISINGWAVE_SSLMODE": "disable"`
 
 3. Start interacting in Chat; ask questions like "List my tables" or "Describe table users."
 

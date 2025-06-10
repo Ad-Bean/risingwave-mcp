@@ -1,3 +1,4 @@
 fastmcp
 risingwave-py
 asyncio
+psycopg2

@@ -13,7 +13,7 @@ if CONNECTION_STR is None :
     risingwave_port = os.getenv("RISINGWAVE_PORT", "4566")
     risingwave_database = os.getenv("RISINGWAVE_DATABASE", "dev")
     risingwave_sslmode = os.getenv("RISINGWAVE_SSLMODE", "require")
-    risingwave_timeout = os.getenv("RISINGWAVE_TIMEOUT", "30s")
+    risingwave_timeout = os.getenv("RISINGWAVE_TIMEOUT", "30")
 
     if not risingwave_host or not risingwave_user or not risingwave_password:
         raise ValueError(
