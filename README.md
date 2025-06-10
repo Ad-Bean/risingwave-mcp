@@ -27,9 +27,9 @@ A lightweight Model Context Protocol (MCP) server that lets you query and manage
 
 You can run RisingWave locally or connect to your cloud RisingWave instance.
 
-### Run Risingwave
+### Run RisingWave
 
-You can install RisingWave standlone on your laptop via:
+You can install RisingWave standalone on your laptop via:
 
 ```python
 # Download and install RisingWave standalone
@@ -44,13 +44,13 @@ risingwave
 
 For other installation methods, such as Docker, please refer to the [official RisingWave documentation](https://docs.risingwave.com/get-started/quickstart).
 
-### Risingwave Cloud
+### RisingWave Cloud
 
 You can also provision a free-tier cluster on [RisingWave Cloud](https://cloud.risingwave.com/auth/signin/)
 
 ### VS Code Copilot
 
-1. Create an MCP server in the VS Code Chat pane (Agent Mode → Select Tools).
+1. Create an MCP server in the VS Code Chat (Agent Mode → Select Tools).
 2. Add or update `.vscode/mcp.json`:
 
    ```json
