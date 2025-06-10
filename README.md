@@ -1,76 +1,48 @@
 # RisingWave MCP
 
-A Model Context Protocol (MCP) server for RisingWave database that provides seamless integration with AI assistants like Claude Desktop and VS Code Copilot. Built using FastMCP framework, this server enables natural language interactions with your RisingWave streaming database.
+A lightweight Model Context Protocol (MCP) server that lets you query and manage your RisingWave streaming database with natural language via AI assistants and tools.
 
 ## Features
 
-- **Real-time Database Access**: Query tables, materialized views, and streaming data
-- **Comprehensive Tools**: 20+ MCP tools covering DDL, DML, and administrative operations
-- **Security**: Environment-based configuration with credential protection
-- **FastMCP Framework**: High-performance STDIO transport protocol
-- **AI Assistant Integration**: Works with Claude Desktop, VS Code Copilot, and other MCP clients
-- **Streaming Database Support**: Specialized tools for RisingWave's streaming capabilities
+- Real-time access to tables, materialized views, and streaming data
+- Built on FastMCP and risingwave-py for high-performance STDIO transport
+- Seamless integration with VS Code Copilot, Claude Desktop, and other MCP clients
 
-## Quick Start
+## Installation
 
-1. **Install Dependencies**:
+1. Clone the repository and enter the directory:
 
    ```bash
-   pip install -r requirements.txt
-   ```
-
-2. **Configure Environment**:
-
-   ```bash
-   cp .env.example .env
-   # Edit .env with your RisingWave connection details
-   ```
-
-3. **Test the Server**:
-   ```bash
-   python src/main.py
-   # Server starts and waits for MCP protocol messages
-   ```
-
-### Prerequisites
-
-- Python 3.8 or higher
-- Access to a RisingWave database instance
-- VS Code (for VS Code Copilot integration) or Claude Desktop
-
-### Step-by-Step Setup
-
-1. **Clone and Install**:
-
-   ```bash
-   git clone <repository-url>
+   git clone https://github.com/your-org/risingwave-mcp.git
    cd risingwave-mcp
+   ```
+
+2. Install runtime dependencies:
+
+   ```bash
    pip install -r requirements.txt
    ```
 
-1. **Environment Configuration**: Copy the template and configure your database connection:
+## Configuration
 
-   ```bash
-   cp .env.example .env
-   ```
+Copy the example environment file and fill in your RisingWave connection string:
 
-   Edit the `.env` file with your actual RisingWave connection details:
+```bash
+cp .env.example .env
+```
 
-   ```env
-   RISINGWAVE_CONNECTION_STR=postgresql://username:password@host:port/database?sslmode=require
-   ```
+Edit `.env`:
 
-## Usage & Integration
+```env
+RISINGWAVE_CONNECTION_STR=postgresql://user:password@host:port/dbname?sslmode=require
+```
 
-This MCP server uses the STDIO transport protocol and integrates with various AI assistants. Choose your preferred integration method:
+## Configuration
 
-### 🔵 VS Code Copilot Integration
+### VS Code Copilot
 
-Perfect for developers who want database assistance while coding.
-
-1. **Create MCP Server**: Click Agent Mode and Select Tools on VSCode Chat Pannel to start your MCP sever.
-
-2. **Configure MCP Server**: Modify `.vscode/mcp.json` in your workspace:
+1. Create an MCP server in the VS Code Chat pane (Agent Mode → Select Tools).
+2. Add or update `.vscode/mcp.json`:
 
    ```json
    {
@@ -78,73 +50,76 @@ Perfect for developers who want database assistance while coding.
        "risingwave-mcp": {
          "type": "stdio",
          "command": "python",
-         "args": ["src/main.py"]
+         "args": ["path_to/risingwave-mcp/src/main.py"],
+         "env": {
+           "RISINGWAVE_CONNECTION_STR": "<risingwave-connection>",
+           // or use connection params
+           "RISINGWAVE_HOST": "<risingwave-host>",
+           "RISINGWAVE_USER": "<risingwave-user>",
+           "RISINGWAVE_PORT": "4566",
+           "RISINGWAVE_PASSWORD": "<risingwave-password>",
+           "RISINGWAVE_DATABASE": "<risingwave-database>",
+           "RISINGWAVE_SSLMODE": "require"
+         }
        }
      }
    }
    ```
 
-3. Reference: [Use MCP servers in VS Code (Preview)](https://code.visualstudio.com/docs/copilot/chat/mcp-servers)
+3. Start interacting in Chat; ask questions like "List my tables" or "Describe table users."
 
-### Option 2: Using with Claude Desktop
+### Claude Desktop
 
-1. **Configure Claude Desktop**: Add the server configuration to your `claude_desktop_config.json`:
+Add to your `claude_desktop_config.json` under mcpServers:
 
-   **Windows**: `%APPDATA%\Claude\claude_desktop_config.json`
-   **macOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`
-   **Linux**: `~/.config/Claude/claude_desktop_config.json`
+```json
+{
+  "mcpServers": {
+    "risingwave-mcp": {
+      "command": "python",
+      "args": ["path_to/risingwave-mcp/src/main.py"],
+      "env": {
+        "RISINGWAVE_CONNECTION_STR": "<risingwave-connection>",
+        // or use connection params
+        "RISINGWAVE_HOST": "<risingwave-host>",
+        "RISINGWAVE_USER": "<risingwave-user>",
+        "RISINGWAVE_PORT": "4566",
+        "RISINGWAVE_PASSWORD": "<risingwave-password>",
+        "RISINGWAVE_DATABASE": "<risingwave-database>",
+        "RISINGWAVE_SSLMODE": "require"
+      }
+    }
+  }
+}
+```
 
-   ```json
-   {
-     "mcpServers": {
-       "risingwave-mcp": {
-         "command": "python",
-         "args": ["Path to/risingwave-mcp/src/main.py"]
-       }
-     }
-   }
-   ```
+Restart Claude Desktop to apply changes.
 
-2. **Restart Claude Desktop**: Close and reopen Claude Desktop to load the new MCP server.
+### Manual Testing
 
-3. Reference: [Claude MCP Server Developers](https://modelcontextprotocol.io/quickstart/user)
-
-### Option 3: Manual Testing (Development)
-
-For development and testing purposes, you can run the server directly:
+Run the server directly for development or CI:
 
 ```bash
 python src/main.py
 ```
 
-The server will start and listen for MCP protocol messages on STDIN/STDOUT.
+The server will listen on STDIN/STDOUT for MCP messages.
 
 ## Available Tools
 
-Once connected, you can use the following MCP tools:
+- `list_databases` — List all databases
+- `show_tables` — List tables in the current database
+- `describe_table` — Describe table schema
+- `run_select_query` — Safely execute SELECT queries
+- `table_row_count` — Get row count for a table
+- `check_table_exists` — Verify table existence
+- `list_schemas` — List all schemas
+- `list_materialized_views` — List materialized views
+- `get_table_columns` — Detailed column info
+- `create_materialized_view` — Create a new materialized view
+- `drop_materialized_view` — Drop an existing view
+- `execute_ddl_statement` — Run generic DDL commands
+- `get_database_version` — Retrieve RisingWave version
+- `flush_database` — Force flush pending writes
 
-- `list_databases` - List all databases in the RisingWave cluster
-- `show_tables` - List all tables in the database
-- `run_select_query` - Execute SELECT queries safely
-- `describe_table` - Get table structure and column information
-- `table_row_count` - Get row count for a specific table
-- `check_table_exists` - Check if a table exists
-- `list_schemas` - List all database schemas
-- `list_materialized_views` - List all materialized views
-- `get_table_columns` - Get detailed column information
-- `create_materialized_view` - Create new materialized views
-- `drop_materialized_view` - Drop materialized views
-- `execute_ddl_statement` - Execute DDL statements (CREATE, ALTER, DROP)
-- `get_database_version` - Get RisingWave version information
-- `flush_database` - Force flush pending writes
-- And many more...
-
-## Example Interactions
-
-Once the MCP server is running, you can ask questions like:
-
-- "List all my tables"
-- "Describe the my_purchases table"
-- "How many materialized views do I have?"
-- "Show me the row count for the ad_events table"
-- "Create a materialized view that calculates daily sales totals"
+_For a full list, check `src/tools.py`._

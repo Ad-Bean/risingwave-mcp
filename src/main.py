@@ -1,27 +1,36 @@
 from fastmcp import FastMCP
 import os
-from dotenv import load_dotenv
 from risingwave import RisingWave, RisingWaveConnOptions, OutputFormat
-
-# Load environment variables from .env file
-load_dotenv()
 
 mcp = FastMCP("Risingwave MCP Server")
 
-# Get connection string from environment variable
 CONNECTION_STR = os.getenv("RISINGWAVE_CONNECTION_STR")
 
-if not CONNECTION_STR:
-    raise ValueError(
-        "RISINGWAVE_CONNECTION_STR environment variable is not set. Please check your .env file.")
+if CONNECTION_STR is None :
+    risingwave_host = os.getenv("RISINGWAVE_HOST")
+    risingwave_user = os.getenv("RISINGWAVE_USER")
+    risingwave_password = os.getenv("RISINGWAVE_PASSWORD")
+    risingwave_port = os.getenv("RISINGWAVE_PORT", "4566")
+    risingwave_database = os.getenv("RISINGWAVE_DATABASE", "dev")
+    risingwave_sslmode = os.getenv("RISINGWAVE_SSLMODE", "require")
+    risingwave_timeout = os.getenv("RISINGWAVE_TIMEOUT", "30s")
 
+    if not risingwave_host or not risingwave_user or not risingwave_password:
+        raise ValueError(
+            "RISINGWAVE_HOST, RISINGWAVE_USER, and RISINGWAVE_PASSWORD must be set in environment variables")
+
+    CONNECTION_STR = f"postgresql://{risingwave_user}:{risingwave_password}@{risingwave_host}:{risingwave_port}/{risingwave_database}?sslmode={risingwave_sslmode}&connect_timeout={risingwave_timeout}"
 
 def setup_risingwave_connection():
     """Set up a connection to the RisingWave database."""
-    rw = RisingWave(
-        RisingWaveConnOptions(CONNECTION_STR)
-    )
-    return rw
+    try:
+        rw = RisingWave(
+            RisingWaveConnOptions(CONNECTION_STR)
+        )
+        return rw
+    except Exception as e:
+        raise ValueError(f"Failed to connect to RisingWave: {str(e)}")
+
 
 
 @mcp.tool
@@ -453,4 +462,5 @@ def list_table_privileges(table_name: str, schema_name: str = "public") -> str:
 
 
 if __name__ == "__main__":
+
     mcp.run(transport="stdio")
