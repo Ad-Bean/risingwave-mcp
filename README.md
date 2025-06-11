@@ -1,6 +1,6 @@
-# RisingWave MCP
+# RisingWave MCP Server
 
-**RisingWave MCP** is a lightweight [Model Context Protocol (MCP)](https://modelcontextprotocol.io/introduction) server that lets you query and manage your [RisingWave](https://risingwave.com) streaming database using natural language through AI assistants like VS Code Copilot and Claude Desktop.
+**RisingWave MCP Server** is a lightweight [Model Context Protocol (MCP)](https://modelcontextprotocol.io/introduction) server that lets you query and manage your [RisingWave](https://risingwave.com) streaming database using natural language through AI assistants like VS Code Copilot and Claude Desktop.
 
 ---
 
