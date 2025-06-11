@@ -146,21 +146,23 @@ This will listen for MCP messages over STDIN/STDOUT.
 
 ## 🛠️ Available Tools
 
-| Tool Name                  | Description                              |
-| -------------------------- | ---------------------------------------- |
-| `list_databases`           | List all databases                       |
-| `show_tables`              | List tables in the current database      |
-| `describe_table`           | Describe the schema of a table           |
-| `run_select_query`         | Safely execute a `SELECT` query          |
-| `table_row_count`          | Return row count for a table             |
-| `check_table_exists`       | Check whether a table exists             |
-| `list_schemas`             | List all available schemas               |
-| `list_materialized_views`  | List all materialized views              |
-| `get_table_columns`        | Return detailed info about table columns |
-| `create_materialized_view` | Create a new materialized view           |
-| `drop_materialized_view`   | Drop an existing materialized view       |
-| `execute_ddl_statement`    | Run generic DDL like `CREATE TABLE`      |
-| `get_database_version`     | Return the current RisingWave version    |
-| `flush_database`           | Force flush any pending writes           |
+| Tool Name                  | Description                                                          |
+| -------------------------- | -------------------------------------------------------------------- |
+| `list_databases`           | List all databases                                                   |
+| `show_tables`              | List tables in the current database                                  |
+| `describe_table`           | Describe the schema of a table                                       |
+| `run_select_query`         | Safely execute a `SELECT` query                                      |
+| `explain_query`            | Get query execution plan without running it                          |
+| `explain_analyze`          | Get detailed execution statistics by running the query(only in v2.4) |
+| `table_row_count`          | Return row count for a table                                         |
+| `check_table_exists`       | Check whether a table exists                                         |
+| `list_schemas`             | List all available schemas                                           |
+| `list_materialized_views`  | List all materialized views                                          |
+| `get_table_columns`        | Return detailed info about table columns                             |
+| `create_materialized_view` | Create a new materialized view                                       |
+| `drop_materialized_view`   | Drop an existing materialized view                                   |
+| `execute_ddl_statement`    | Run generic DDL like `CREATE TABLE`                                  |
+| `get_database_version`     | Return the current RisingWave version                                |
+| `flush_database`           | Force flush any pending writes                                       |
 
 For a full list of tools, see [`src/tools.py`](src/tools.py).
