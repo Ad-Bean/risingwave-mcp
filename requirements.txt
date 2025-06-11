@@ -1,4 +1,5 @@
 fastmcp
 risingwave-py
+psycopg2-binary
 asyncio
 psycopg2
