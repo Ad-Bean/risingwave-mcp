@@ -1,13 +1,13 @@
 # RisingWave MCP
 
-**RisingWave MCP** is a lightweight [Model Context Protocol (MCP)](https://github.com/jlowin/fastmcp) server that lets you query and manage your [RisingWave](https://risingwave.com) streaming database using natural language through AI assistants like VS Code Copilot and Claude Desktop.
+**RisingWave MCP** is a lightweight [Model Context Protocol (MCP)](https://modelcontextprotocol.io/introduction) server that lets you query and manage your [RisingWave](https://risingwave.com) streaming database using natural language through AI assistants like VS Code Copilot and Claude Desktop.
 
 ---
 
 ## 🚀 Features
 
 - Real-time access to RisingWave tables, materialized views, and streaming data
-- Built on [`FastMCP`](https://github.com/context-labs/fastmcp) and [`risingwave-py`](https://github.com/risingwavelabs/risingwave-py) with high-performance STDIO transport
+- Built on [`FastMCP`](https://github.com/jlowin/fastmcp) and [`risingwave-py`](https://github.com/risingwavelabs/risingwave-py) with high-performance STDIO transport
 - Seamless integration with VS Code Copilot, Claude Desktop, and other MCP-compatible tools
 
 ---
