@@ -1,96 +1,118 @@
 # RisingWave MCP
 
-A lightweight Model Context Protocol (MCP) server that lets you query and manage your RisingWave streaming database with natural language via AI assistants and tools.
+**RisingWave MCP** is a lightweight [Model Context Protocol (MCP)](https://github.com/context-labs/fastmcp) server that lets you query and manage your [RisingWave](https://risingwave.com) streaming database using natural language through AI assistants like VS Code Copilot and Claude Desktop.
 
-## Features
+---
 
-- Real-time access to tables, materialized views, and streaming data
-- Built on FastMCP and risingwave-py for high-performance STDIO transport
-- Seamless integration with VS Code Copilot, Claude Desktop, and other MCP clients
+## 🚀 Features
 
-## Installation
+- Real-time access to RisingWave tables, materialized views, and streaming data
+- Built on [`FastMCP`](https://github.com/context-labs/fastmcp) and [`risingwave-py`](https://github.com/risingwavelabs/risingwave-py) with high-performance STDIO transport
+- Seamless integration with VS Code Copilot, Claude Desktop, and other MCP-compatible tools
 
-1. Clone the repository and enter the directory:
+---
 
-   ```bash
-   git clone https://github.com/risingwavelabs/risingwave-mcp.git
-   cd risingwave-mcp
-   ```
+## 📦 Installation
 
-2. Install runtime dependencies:
+```bash
+git clone https://github.com/risingwavelabs/risingwave-mcp.git
+cd risingwave-mcp
+pip install -r requirements.txt
+```
 
-   ```bash
-   pip install -r requirements.txt
-   ```
+---
 
-## Configuration
+## ⚙️ Setting Up
 
-You can run RisingWave locally or connect to your cloud RisingWave instance.
+You’ll need a running RisingWave instance—either locally or in the cloud.
 
-### Run RisingWave
+### Option 1: Run RisingWave Locally
 
-You can install RisingWave standalone on your laptop via:
-
-```python
-# Download and install RisingWave standalone
+```bash
+# Install RisingWave standalone
 curl -L https://risingwave.com/sh | sh
 
-# start RisingWave on macOS
+# macOS
 risingwave
 
-# start RisingWave on linux
+# Linux
 ./risingwave
 ```
 
-For other installation methods, such as Docker, please refer to the [official RisingWave documentation](https://docs.risingwave.com/get-started/quickstart).
+For Docker or other options, see the docs:
+👉 [https://docs.risingwave.com/get-started/quickstart](https://docs.risingwave.com/get-started/quickstart)
 
-### RisingWave Cloud
+### Option 2: Use RisingWave Cloud
 
-You can also provision a free-tier cluster on [RisingWave Cloud](https://cloud.risingwave.com/auth/signin/)
+You can also spin up a free-tier cluster in seconds:
+👉 [https://cloud.risingwave.com/auth/signin](https://cloud.risingwave.com/auth/signin)
+
+---
+
+## 🧩 Integration
 
 ### VS Code Copilot
 
-1. Create an MCP server in the VS Code Chat (Agent Mode → Select Tools).
-2. Add or update `.vscode/mcp.json`:
+1. In the **VS Code Chat** panel: Agent Mode → Select Tools → Create MCP Server.
+2. Add the following to `.vscode/mcp.json`.
 
-   ```json
-   {
-     "servers": {
-       "risingwave-mcp": {
-         "type": "stdio",
-         "command": "python",
-         "args": ["path_to/risingwave-mcp/src/main.py"],
-         "env": {
-           "RISINGWAVE_CONNECTION_STR": "<risingwave-connection> or use connection params",
-           "RISINGWAVE_HOST": "<risingwave-host>",
-           "RISINGWAVE_USER": "<risingwave-user>",
-           "RISINGWAVE_PORT": "4566",
-           "RISINGWAVE_PASSWORD": "<risingwave-password>",
-           "RISINGWAVE_DATABASE": "<risingwave-database>",
-           "RISINGWAVE_SSLMODE": "require"
-         }
-       }
-     }
-   }
-   ```
+#### ✅ Option 1: Use a connection string
 
-> **Note:** If connecting to a local RisingWave instance, you can use the following examples for the `env` variables:
->
-> - Connection String: `"RISINGWAVE_CONNECTION_STR": "postgresql://root:root@localhost:4566/dev"`
->
-> - or use parameters:
->   - `"RISINGWAVE_HOST": "localhost"`
->   - `"RISINGWAVE_USER": "root"`
->   - `"RISINGWAVE_PASSWORD": "root"`
->   - `"RISINGWAVE_PORT": "4566"`
->   - `"RISINGWAVE_DATABASE": "dev"`
->   - `"RISINGWAVE_SSLMODE": "disable"`
+```json
+{
+  "servers": {
+    "risingwave-mcp": {
+      "type": "stdio",
+      "command": "python",
+      "args": ["path_to/risingwave-mcp/src/main.py"],
+      "env": {
+        "RISINGWAVE_CONNECTION_STR": "postgresql://root:root@localhost:4566/dev"
+      }
+    }
+  }
+}
+```
 
-3. Start interacting in Chat; ask questions like "List my tables" or "Describe table users."
+**Explanation:**
+
+- `postgresql://` — Use PostgreSQL protocol (RisingWave is compatible)
+- `root:root@` — Username and password
+- `localhost:4566` — Host and port
+- `/dev` — Database name
+
+#### ✅ Option 2: Use individual parameters
+
+```json
+{
+  "servers": {
+    "risingwave-mcp": {
+      "type": "stdio",
+      "command": "python",
+      "args": ["path_to/risingwave-mcp/src/main.py"],
+      "env": {
+        "RISINGWAVE_HOST": "localhost",
+        "RISINGWAVE_PORT": "4566",
+        "RISINGWAVE_USER": "root",
+        "RISINGWAVE_PASSWORD": "root",
+        "RISINGWAVE_DATABASE": "dev",
+        "RISINGWAVE_SSLMODE": "disable"
+      }
+    }
+  }
+}
+```
+
+3. Start chatting!
+   Ask questions like:
+
+   - _"List my tables"_
+   - _"Create a materialized view that aggregates payments by minute"_
+
+---
 
 ### Claude Desktop
 
-Add to your `claude_desktop_config.json` under mcpServers:
+1. Add the MCP server to your `claude_desktop_config.json` under `mcpServers`:
 
 ```json
 {
@@ -99,46 +121,46 @@ Add to your `claude_desktop_config.json` under mcpServers:
       "command": "python",
       "args": ["path_to/risingwave-mcp/src/main.py"],
       "env": {
-        "RISINGWAVE_CONNECTION_STR": "<risingwave-connection> or use connection params",
-        "RISINGWAVE_HOST": "<risingwave-host>",
-        "RISINGWAVE_USER": "<risingwave-user>",
-        "RISINGWAVE_PORT": "4566",
-        "RISINGWAVE_PASSWORD": "<risingwave-password>",
-        "RISINGWAVE_DATABASE": "<risingwave-database>",
-        "RISINGWAVE_SSLMODE": "require"
+        "RISINGWAVE_CONNECTION_STR": "postgresql://root:root@localhost:4566/dev"
       }
     }
   }
 }
 ```
 
-Restart Claude Desktop to apply changes.
+2. Restart Claude Desktop to apply changes.
 
-### Manual Testing
+---
 
-Run the server directly for development or CI:
+### Manual Testing (Dev / CI)
+
+You can run the MCP server directly from the CLI:
 
 ```bash
 python src/main.py
 ```
 
-The server will listen on STDIN/STDOUT for MCP messages.
+This will listen for MCP messages over STDIN/STDOUT.
 
-## Available Tools
+---
 
-- `list_databases` — List all databases
-- `show_tables` — List tables in the current database
-- `describe_table` — Describe table schema
-- `run_select_query` — Safely execute SELECT queries
-- `table_row_count` — Get row count for a table
-- `check_table_exists` — Verify table existence
-- `list_schemas` — List all schemas
-- `list_materialized_views` — List materialized views
-- `get_table_columns` — Detailed column info
-- `create_materialized_view` — Create a new materialized view
-- `drop_materialized_view` — Drop an existing view
-- `execute_ddl_statement` — Run generic DDL commands
-- `get_database_version` — Retrieve RisingWave version
-- `flush_database` — Force flush pending writes
+## 🛠️ Available Tools
 
-_For a full list, check `src/tools.py`._
+| Tool Name                  | Description                              |
+| -------------------------- | ---------------------------------------- |
+| `list_databases`           | List all databases                       |
+| `show_tables`              | List tables in the current database      |
+| `describe_table`           | Describe the schema of a table           |
+| `run_select_query`         | Safely execute a `SELECT` query          |
+| `table_row_count`          | Return row count for a table             |
+| `check_table_exists`       | Check whether a table exists             |
+| `list_schemas`             | List all available schemas               |
+| `list_materialized_views`  | List all materialized views              |
+| `get_table_columns`        | Return detailed info about table columns |
+| `create_materialized_view` | Create a new materialized view           |
+| `drop_materialized_view`   | Drop an existing materialized view       |
+| `execute_ddl_statement`    | Run generic DDL like `CREATE TABLE`      |
+| `get_database_version`     | Return the current RisingWave version    |
+| `flush_database`           | Force flush any pending writes           |
+
+For a full list of tools, see [`src/tools.py`](src/tools.py).
